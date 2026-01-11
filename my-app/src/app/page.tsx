@@ -2,7 +2,25 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Github, Mail, Code2, Database, Layers } from "lucide-react";
+import { ChevronLeft, ChevronRight, Github, Mail } from "lucide-react";
+import {
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiExpress,
+  SiLaravel,
+  SiPostgresql,
+  SiMysql,
+  SiSupabase,
+  SiGit,
+  SiDocker,
+  SiVercel,
+} from "react-icons/si";
 
 const projects = [
   {
@@ -213,45 +231,86 @@ export default function PortfolioPage() {
 
         {/* Skills Section */}
         <section className="mx-auto max-w-7xl px-6 py-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="h-1 w-12 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500" />
               <h2 className="text-4xl font-bold text-zinc-100">Tech Stack</h2>
             </div>
+            <p className="text-zinc-400 max-w-2xl">
+              Technologies and tools I use to build modern full-stack applications
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
-              { title: "Frontend", icon: Code2, skills: ["React / Next.js", "Tailwind CSS", "Framer Motion"], bg: "bg-violet-500/10", text: "text-violet-400", dot: "bg-violet-500" },
-              { title: "Backend", icon: Database, skills: ["Node.js / Express", "Laravel", "PostgreSQL / MySQL", "Supabase"], bg: "bg-fuchsia-500/10", text: "text-fuchsia-400", dot: "bg-fuchsia-500" },
-              { title: "Tools & Others", icon: Layers, skills: ["Git & GitHub", "Railway / Vercel", "Docker", "Playwright", "Postman"], bg: "bg-indigo-500/10", text: "text-indigo-400", dot: "bg-indigo-500" }
-            ].map((cat) => {
-              const Icon = cat.icon;
+              { name: "HTML5", icon: SiHtml5, color: "text-orange-500" },
+              { name: "CSS3", icon: SiCss3, color: "text-blue-500" },
+
+              { name: "JavaScript", icon: SiJavascript, color: "text-yellow-400" },
+              { name: "TypeScript", icon: SiTypescript, color: "text-blue-400" },
+
+              { name: "React", icon: SiReact, color: "text-cyan-400" },
+              { name: "Next.js", icon: SiNextdotjs, color: "text-zinc-200" },
+
+              { name: "Tailwind CSS", icon: SiTailwindcss, color: "text-sky-400" },
+
+              { name: "Node.js", icon: SiNodedotjs, color: "text-green-500" },
+              { name: "Express", icon: SiExpress, color: "text-zinc-300" },
+              { name: "Laravel", icon: SiLaravel, color: "text-red-500" },
+
+              { name: "PostgreSQL", icon: SiPostgresql, color: "text-blue-400" },
+              { name: "MySQL", icon: SiMysql, color: "text-sky-500" },
+              { name: "Supabase", icon: SiSupabase, color: "text-emerald-400" },
+
+              { name: "Git", icon: SiGit, color: "text-orange-500" },
+              { name: "Docker", icon: SiDocker, color: "text-sky-500" },
+              { name: "Vercel", icon: SiVercel, color: "text-zinc-200" },
+
+              // ✅ Playwright ใช้รูป
+              { name: "Playwright", logo: "/playwright.svg", isImage: true },
+            ].map((skill) => {
+              const Icon = "icon" in skill ? skill.icon : null;
+
               return (
                 <motion.div
-                  key={cat.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 backdrop-blur-sm hover:border-zinc-700 hover:bg-zinc-900/80 transition-all duration-300"
+                  whileHover={{ y: -6 }}
+                  className="group flex flex-col items-center justify-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-zinc-900/80"
                 >
-                  <div className={`mb-6 inline-flex rounded-xl ${cat.bg} p-3 ${cat.text}`}>
-                    <Icon size={28} />
+                  <div className="flex h-14 w-14 items-center justify-center">
+                    {"isImage" in skill ? (
+                      <img
+                        src={skill.logo}
+                        alt={skill.name}
+                        className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-110"
+                      />
+                    ) : (
+                      Icon && (
+                        <Icon
+                          className={`h-10 w-10 ${skill.color} transition-transform duration-300 group-hover:scale-110`}
+                        />
+                      )
+                    )}
                   </div>
-                  <h4 className="mb-5 text-2xl font-bold text-zinc-100">{cat.title}</h4>
-                  <ul className="space-y-3 text-zinc-400">
-                    {cat.skills.map(skill => (
-                      <li key={skill} className="flex items-center gap-3 text-sm">
-                        <div className={`h-1.5 w-1.5 rounded-full ${cat.dot}`} />
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
+
+                  <span className="text-sm font-medium text-zinc-300 group-hover:text-violet-400 transition">
+                    {skill.name}
+                  </span>
                 </motion.div>
               );
             })}
           </div>
+
         </section>
+
 
         {/* Projects Section */}
         <section className="mx-auto max-w-7xl px-6 py-24">
